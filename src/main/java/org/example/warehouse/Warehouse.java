@@ -4,36 +4,37 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Warehouse {
-    // Use LinkedHashMap to maintain insertion order
     private final Map<UUID, ProductRecord> products = new LinkedHashMap<>();
     private final Set<ProductRecord> changedProducts = new HashSet<>();
-    private String name;
+    private final String name;
 
-    // Singleton instance
+    // Singleton instance map
     private static final Map<String, Warehouse> instances = new HashMap<>();
 
     // Private constructor to prevent public instantiation
     private Warehouse(String name) {
         this.name = name;
-        this.products.clear();
-        this.changedProducts.clear();
     }
 
-    // Method to reset the singleton instance map for testing purposes
-    public static void reset() {
-        instances.clear();
-    }
-
-    // Factory method to get or create a warehouse
+    // Factory method to get or create a warehouse instance by name
     public static Warehouse getInstance(String name) {
+        // If name is an empty string, return a new instance each time
+        if (name.isEmpty()) {
+            return new Warehouse(name);
+        }
+
+        // Otherwise, use singleton behavior for non-empty names
         return instances.computeIfAbsent(name, Warehouse::new);
     }
 
+    // Default instance with a predefined name
     public static Warehouse getInstance() {
         return getInstance("DefaultWarehouse");
     }
 
-    // Check if the warehouse is empty
+
+
+// Check if the warehouse is empty
     public boolean isEmpty() {
         return products.isEmpty();
     }
