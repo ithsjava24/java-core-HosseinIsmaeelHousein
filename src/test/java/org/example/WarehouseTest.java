@@ -21,6 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class WarehouseTest {
 
+    @BeforeEach
+    void resetWarehouse() {
+        Warehouse.reset();  // Reset the singleton state before each test
+    }
+
+
     Warehouse warehouse;
 
     @Test
