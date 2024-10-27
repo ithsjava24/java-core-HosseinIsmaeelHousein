@@ -2,9 +2,10 @@ package org.example.warehouse;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Category {
-    private String name;
+    private final String name;  // Make `name` final for immutability
     private static final Map<String, Category> categoryCache = new HashMap<>();
 
     // Private constructor to prevent public instantiation
@@ -31,5 +32,19 @@ public class Category {
     // Getter for name
     public String getName() {
         return name;
+    }
+
+    // Override equals and hashCode based on `name`
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+        Category category = (Category) o;
+        return name.equals(category.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
